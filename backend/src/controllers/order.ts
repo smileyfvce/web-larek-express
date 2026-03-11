@@ -42,7 +42,7 @@ async function createOrder(req: Request, res: Response, next: NextFunction) {
       total: totalSum,
     };
 
-    res.status(201).json(order);
+    res.status(200).json(order);
   } catch (error) {
     next(error);
   }
