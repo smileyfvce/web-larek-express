@@ -1,18 +1,18 @@
-import BadRequestError from "../errors/bad-request-error";
-import ConflictError from "../errors/conflict-error";
-import NotFoundError from "../errors/not-found-error";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+import BadRequestError from '../errors/bad-request-error';
+import ConflictError from '../errors/conflict-error';
+import NotFoundError from '../errors/not-found-error';
 
-export const errorHandler = (
+const errorHandler = (
   error: any,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
-  if (error instanceof Error && error.message.includes("E11000")) {
+  if (error instanceof Error && error.message.includes('E11000')) {
     return res
       .status(409)
-      .json({ message: "Товар с таким названием существует" });
+      .json({ message: 'Товар с таким названием существует' });
   }
 
   if (error instanceof BadRequestError) {
@@ -27,7 +27,9 @@ export const errorHandler = (
     return res.status(error.statusCode).json({ message: error.message });
   }
 
-  res.status(500).json({
-    message: "Ошибка на сервере",
+  return res.status(500).json({
+    message: 'Ошибка на сервере',
   });
 };
+
+export default errorHandler;
